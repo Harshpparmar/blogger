@@ -1,17 +1,28 @@
 // components/Auth.jsx
 import React, { useState } from 'react';
-import LoginForm from './LoginForm';
-import RegisterForm from './RegisterForm';
 
 const Auth = ({ onClose, onAuthSuccess }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [error, setError] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const mockUsers = [
-    { name: 'Test User', email: 'test@example.com', password: 'password123' },
+    { name: 'Admin User', email: 'admin@example.com', password: 'admin123', role: 'admin' },
+    { name: 'Test User', email: 'test@example.com', password: 'password123', role: 'user' },
   ];
 
-  const handleLogin = (email, password) => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (isLogin) {
+      handleLogin();
+    } else {
+      handleRegister();
+    }
+  };
+
+  const handleLogin = () => {
     const foundUser = mockUsers.find(
       (user) => user.email === email && user.password === password
     );
@@ -23,12 +34,12 @@ const Auth = ({ onClose, onAuthSuccess }) => {
     }
   };
 
-  const handleRegister = (name, email, password) => {
+  const handleRegister = () => {
     const existingUser = mockUsers.find((user) => user.email === email);
     if (existingUser) {
       setError('Email already in use');
     } else {
-      const newUser = { name, email, password };
+      const newUser = { name, email, password, role: 'user' };
       mockUsers.push(newUser);
       onAuthSuccess(newUser);
       onClose();
@@ -36,16 +47,45 @@ const Auth = ({ onClose, onAuthSuccess }) => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full max-w-md mx-auto">
       <h2 className="text-2xl font-bold mb-4 text-center">
         {isLogin ? 'Login' : 'Register'}
       </h2>
       {error && <p className="text-red-500 mb-4 text-center">{error}</p>}
-      {isLogin ? (
-        <LoginForm onLogin={handleLogin} />
-      ) : (
-        <RegisterForm onRegister={handleRegister} />
-      )}
+      <form onSubmit={handleSubmit} className="space-y-4">
+        {!isLogin && (
+          <input
+            type="text"
+            placeholder="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="w-full p-2 border rounded"
+            required
+          />
+        )}
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-full p-2 border rounded"
+          required
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="w-full p-2 border rounded"
+          required
+        />
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+        >
+          {isLogin ? 'Login' : 'Register'}
+        </button>
+      </form>
       <p className="mt-4 text-center">
         {isLogin ? "Don't have an account? " : "Already have an account? "}
         <button

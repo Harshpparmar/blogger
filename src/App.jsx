@@ -94,6 +94,8 @@
 
 // export default App;
 
+// App.jsx
+// App.jsx
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Header from './components/Header';
@@ -126,11 +128,7 @@ const App = () => {
   }, []);
 
   const handleAuthSuccess = (userData) => {
-    const userWithRole = { 
-      ...userData, 
-      role: userData.email === 'admin@example.com' ? 'admin' : 'user' 
-    };
-    setUser(userWithRole);
+    setUser(userData);
     setShowAuth(false);
   };
 

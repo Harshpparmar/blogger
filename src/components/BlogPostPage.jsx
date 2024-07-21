@@ -1,32 +1,14 @@
-import React, { useState, useEffect } from 'react';
+// BlogPostPage.jsx
+import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { getPostById } from '../services/blogService';
 
-const BlogPostPage = () => {
+const BlogPostPage = ({ posts }) => {
   const { id } = useParams();
-  const [post, setPost] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const post = posts.find(p => p.id === parseInt(id));
 
-  useEffect(() => {
-    const fetchPost = async () => {
-      try {
-        const fetchedPost = await getPostById(id);
-        setPost(fetchedPost);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching post:', error);
-        setError('Failed to load post. Please try again later.');
-        setLoading(false);
-      }
-    };
-
-    fetchPost();
-  }, [id]);
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
-  if (!post) return <div>Post not found</div>;
+  if (!post) {
+    return <div>Post not found</div>;
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -52,7 +34,7 @@ const BlogPostPage = () => {
           ))}
         </div>
         <p className="text-gray-700 leading-relaxed mb-6">{post.excerpt}</p>
-        {/* TODO: Replace with full content when available */}
+        {/* In a real application, you'd have the full content here */}
         <p className="text-gray-700 leading-relaxed">
           This is where the full content of the blog post would go. In a real application, 
           you'd fetch the complete post data from your backend API and display it here.
