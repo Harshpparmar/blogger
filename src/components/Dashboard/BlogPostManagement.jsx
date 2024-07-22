@@ -72,17 +72,23 @@ import { getAllPosts, deletePost, getUserPosts } from '../../services/blogServic
 
 const BlogPostManagement = ({ user }) => {
   const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchPosts();
+    if (user) {
+      fetchPosts();
+    }
   }, [user]);
 
   const fetchPosts = async () => {
     try {
+      setLoading(true);
       const fetchedPosts = user.role === 'admin' ? await getAllPosts() : await getUserPosts(user.id);
       setPosts(fetchedPosts);
     } catch (error) {
       console.error('Error fetching posts:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -94,6 +100,14 @@ const BlogPostManagement = ({ user }) => {
       console.error('Error deleting post:', error);
     }
   };
+
+  if (!user) {
+    return <div>Loading user data...</div>;
+  }
+
+  if (loading) {
+    return <div>Loading posts...</div>;
+  }
 
   return (
     <div className="space-y-6">

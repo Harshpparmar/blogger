@@ -4,12 +4,16 @@ import { useParams, Link } from 'react-router-dom';
 
 const BlogPostPage = ({ posts }) => {
   const { id } = useParams();
+  
+  if (!posts || posts.length === 0) {
+    return <div>Loading...</div>;
+  }
+
   const post = posts.find(p => p.id === parseInt(id));
 
   if (!post) {
     return <div>Post not found</div>;
   }
-
   return (
     <div className="container mx-auto px-4 py-8">
       <Link to="/" className="text-blue-500 hover:underline mb-4 inline-block">&larr; Back to all posts</Link>
