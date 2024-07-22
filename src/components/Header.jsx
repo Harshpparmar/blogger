@@ -131,7 +131,7 @@ const Header = ({ user, onAuthClick, onLogout }) => {
     <header className="bg-gray-800 text-white">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <div className="flex items-center">
-          <img src="/logo.png" alt="Logo" className="h-8 w-auto mr-4" />
+          <img src="https://img.icons8.com/?size=100&id=81252&format=png&color=000000" alt="Logo" className="h-8 w-auto mr-4" />
           <h1 className="text-xl font-bold">My Blog</h1>
         </div>
         <nav className="hidden md:flex space-x-4 items-center">
