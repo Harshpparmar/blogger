@@ -2,6 +2,7 @@
 // App.jsx
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { DarkModeProvider } from './DarkModeContext';
 import Header from './components/Header';
 import BlogGrid from './components/BlogGrid';
 import BlogPostPage from './components/BlogPostPage';
@@ -48,8 +49,9 @@ const App = () => {
     localStorage.removeItem('user');
   };
   return (
+    <DarkModeProvider>
     <Router>
-      <div className="flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-screen dark:bg-gray-900">
         <Header
           user={user}
           onAuthClick={() => setShowAuth(true)}
@@ -102,6 +104,7 @@ const App = () => {
         </Modal>
       </div>
     </Router>
+    </DarkModeProvider>
   );
 };
 

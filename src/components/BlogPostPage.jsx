@@ -15,7 +15,7 @@ const BlogPostPage = ({ posts }) => {
     return <div>Post not found</div>;
   }
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 dark:text-white">
       <Link to="/" className="text-blue-500 hover:underline mb-4 inline-block">&larr; Back to all posts</Link>
       <article className="max-w-3xl mx-auto">
         <img src={post.image} alt={post.title} className="w-full h-64 object-cover rounded-lg mb-6" />
@@ -31,15 +31,15 @@ const BlogPostPage = ({ posts }) => {
           {post.tags.map((tag, index) => (
             <span
               key={index}
-              className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+              className="inline-block dark:bg-transparant bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
             >
               #{tag}
             </span>
           ))}
         </div>
-        <p className="text-gray-700 leading-relaxed mb-6">{post.excerpt}</p>
+        <p className="text-gray-700 leading-relaxed mb-6 dark:text-white">{post.excerpt}</p>
         {/* In a real application, you'd have the full content here */}
-        <p className="text-gray-700 leading-relaxed">
+        <p className="text-gray-700 leading-relaxed dark:text-white">
           This is where the full content of the blog post would go. In a real application, 
           you'd fetch the complete post data from your backend API and display it here.
         </p>
